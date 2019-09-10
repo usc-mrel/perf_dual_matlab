@@ -1,4 +1,5 @@
 %% INITIALIZATION
+disp(['initialization']);
 
 clear all; close all;
 
