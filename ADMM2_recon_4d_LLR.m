@@ -1,4 +1,5 @@
 function [imgR,opt,cost1,cost2,cost3]=ADMM2_recon_4d_LLR(k,sMaps, opt)
+
 % function to realize 4d CS SENSE using ADMM which has two splitting steps
 % input: kU: undersampled kspace (zero-filled)
 %        sMaps: sensitivity Map, nt dimension should be 1, even for 4d
@@ -133,12 +134,32 @@ cost3(iter)=cost1(iter)+cost2(iter);
 if opt.plot&&mod(iter-1,opt.update)==0
     opt.RI.Iter=iter;
     opt.RI.ReconTime=toc;
-subplot(1,4,1);imagesc(cat(1,abs(x_k(:,:,3,1)),abs(x_k(:,:,4,1)),abs(x_k(:,:,5,1))),[0 0.6*max(abs(x_k(:)))]);colormap('gray'); title(num2str(iter));axis equal;drawnow
-subplot(1,4,2);plot(double(log10(cost1(1:iter)))); title('data consistency');drawnow
-subplot(1,4,3);plot(double(cost2(1:iter)));title('l1-norm'); drawnow
-subplot(1,4,4);plot(double(cost3(1:iter)));title('Total cost');drawnow
+    
+    subplot(1,4,1);
+    imagesc(cat(1,abs(x_k(:,:,2,15)),abs(x_k(:,:,4,15)),abs(x_k(:,:,6,15))),[0 0.6*max(abs(x_k(:)))]);
+    colormap('gray'); 
+    title(['Iteration #',num2str(iter)]);
+    axis equal; axis off; 
+    drawnow;
+    
+    subplot(1,4,2);
+    plot(double(cost1(1:iter))); 
+    title('data consistency');
+    axis([0 iter+1 0 max(cost1(:))]);
+    drawnow;
+    
+    subplot(1,4,3);
+    plot(double(cost2(1:iter)));
+    title('l1-norm'); 
+    axis([0 iter+1 0 max(cost2(:))]);
+    drawnow;
+    
+    subplot(1,4,4);
+    plot(double(cost3(1:iter)));
+    title('Total cost');
+    axis([0 iter+1 0 max(cost3(:))]);
+    drawnow;
 end
-
 
 iter=iter+1;
 

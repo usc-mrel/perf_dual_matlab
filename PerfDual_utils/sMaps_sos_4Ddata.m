@@ -20,6 +20,7 @@ for nnc = 1:ncoil
 end
 
 tmp=reshape(abs(sMaps),[nreadout,ky,kz*ncoil]);
-figure;montage(reshape(tmp,[nreadout,ky,1, kz*ncoil]),'DisplayRange',[]);
+
+figure; montage(reshape(tmp,[nreadout,ky,1, kz*ncoil]),'DisplayRange',[]);
 
 end
